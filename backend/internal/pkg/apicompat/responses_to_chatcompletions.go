@@ -85,7 +85,7 @@ func ResponsesToChatCompletions(resp *ResponsesResponse, model string) *ChatComp
 		usage := &ChatUsage{
 			PromptTokens:     resp.Usage.InputTokens,
 			CompletionTokens: resp.Usage.OutputTokens,
-			TotalTokens:      resp.Usage.InputTokens + resp.Usage.OutputTokens,
+			TotalTokens:      resp.Usage.TotalTokens,
 		}
 		if resp.Usage.InputTokensDetails != nil && resp.Usage.InputTokensDetails.CachedTokens > 0 {
 			usage.PromptTokensDetails = &ChatTokenDetails{
@@ -297,7 +297,7 @@ func resToChatHandleCompleted(evt *ResponsesStreamEvent, state *ResponsesEventTo
 			usage := &ChatUsage{
 				PromptTokens:     u.InputTokens,
 				CompletionTokens: u.OutputTokens,
-				TotalTokens:      u.InputTokens + u.OutputTokens,
+				TotalTokens:      u.TotalTokens,
 			}
 			if u.InputTokensDetails != nil && u.InputTokensDetails.CachedTokens > 0 {
 				usage.PromptTokensDetails = &ChatTokenDetails{
